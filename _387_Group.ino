@@ -1,17 +1,18 @@
-
+//allows the arduino to access the libraries
 #include <Wire.h>
 #include <Adafruit_MMA8451.h>
 #include <Adafruit_Sensor.h>
 
 Adafruit_MMA8451 mma = Adafruit_MMA8451();
 #include <Servo.h>
-
+//initializes the servo and other variables
 Servo myservo;
 double i;
 int accel;
 int led1=9,led2=10,led3=11,led4=12;
 sensors_event_t event; 
 void setup(void) {
+  //assigns a mode to the digital pins
   pinMode(led1,OUTPUT);
   pinMode(led2,OUTPUT);
   pinMode(led3,OUTPUT);
@@ -28,7 +29,8 @@ void setup(void) {
   myservo.write(85);
 }
 int pos=85;
-
+//depending on the degree of the cup that is needed it 
+//tells the servo to react a certain amount
 void react(){
   switch(accel){
     case -39:
@@ -252,6 +254,8 @@ void react(){
   if(accel<0){
         accel=-accel;
   }
+  //controls the LEDs so 
+  //that when the acceleration is too much they all light up
   switch(accel/10){
     case 0:
       digitalWrite(led1,LOW);
@@ -287,7 +291,7 @@ void react(){
   
   
 }
-
+//increases the magnitude of the acceleration
   void convert(){
     mma.read();
     mma.getEvent(&event);
